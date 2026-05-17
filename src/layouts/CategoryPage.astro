@@ -3,23 +3,36 @@ import BaseLayout from "./BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import PageHero from "../components/PageHero.astro";
 import CtaBlock from "../components/CtaBlock.astro";
+import TableOfContents from "../components/TableOfContents.astro";
 import { nav } from "../data/nav.ts";
 
 interface Props {
   href: string;
+  title?: string;
   description?: string;
+  eyebrow?: string;
   intro?: string;
 }
-const { href, description, intro } = Astro.props;
+const {
+  href,
+  title: titleOverride,
+  description,
+  eyebrow = "קטגוריית שירות",
+  intro,
+} = Astro.props;
+
 const category = nav.find((n) => n.href === href);
-const title = category?.title ?? "";
+const navTitle = category?.title ?? "";
+const title = titleOverride ?? navTitle;
 const children = category?.children ?? [];
+const hasBody = Astro.slots.has("default");
 ---
 <BaseLayout title={title} description={description}>
   <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
-    <Breadcrumbs items={[{ title }]} />
+    <Breadcrumbs items={[{ title: navTitle }]} />
   </div>
-  <PageHero eyebrow="קטגוריית שירות" title={title} intro={intro}>
+
+  <PageHero eyebrow={eyebrow} title={title} intro={intro}>
     <div slot="actions" class="mt-7 flex flex-wrap gap-3">
       <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
         קבלו הצעת מחיר
@@ -29,6 +42,17 @@ const children = category?.children ?? [];
       </a>
     </div>
   </PageHero>
+
+  {hasBody && (
+    <section class="mx-auto max-w-7xl px-4 pb-4 pt-6 lg:px-8 lg:pt-10">
+      <div class="grid gap-8 lg:grid-cols-[1fr_3fr] lg:gap-12">
+        <TableOfContents />
+        <article data-toc-source class="prose-he max-w-none text-[16px] leading-[1.85] text-[color:var(--color-ink-700)]">
+          <slot />
+        </article>
+      </div>
+    </section>
+  )}
 
   <section id="services" class="mx-auto max-w-7xl px-4 py-12 lg:px-8">
     <h2 class="text-xl font-bold text-[color:var(--color-ink-900)]">השירותים שלנו בקטגוריה</h2>
@@ -54,10 +78,6 @@ const children = category?.children ?? [];
       ))}
     </ul>
   </section>
-
-  <div class="mx-auto max-w-3xl px-4 pb-8">
-    <slot />
-  </div>
 
   <div class="mx-auto max-w-7xl px-4 lg:px-8">
     <CtaBlock />
