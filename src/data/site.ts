@@ -1,11 +1,11 @@
 export const site = {
-  name: "שם העסק",
-  shortName: "שם העסק",
+  name: "בית תקשורת",
+  shortName: "בית תקשורת",
   tagline: "מערכות אבטחה, מצלמות, אינטרקום ואזעקה",
-  phone: "050-0000000",
-  phoneIntl: "+972500000000",
-  whatsapp: "972500000000",
-  email: "info@example.com",
+  phone: "03-3818888",
+  phoneIntl: "+97233818888",
+  whatsapp: "972542166156",
+  email: "eliorpirsoom@gmail.com",
   address: "ישראל",
   url: "https://example.com",
 };

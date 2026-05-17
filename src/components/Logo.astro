@@ -1,18 +1,20 @@
 ---
+import { site } from "../data/site.ts";
 interface Props {
   class?: string;
 }
 const { class: className = "" } = Astro.props;
+const monogram = site.name.trim().charAt(0);
 ---
-<a href="/" class={`inline-flex items-center gap-2 ${className}`} aria-label="חזרה לעמוד הבית">
+<a href="/" class={`inline-flex items-center gap-2 ${className}`} aria-label={`חזרה לעמוד הבית של ${site.name}`}>
   <span
     aria-hidden="true"
     class="grid h-10 w-10 place-items-center rounded-xl bg-[color:var(--color-ink-900)] text-[color:var(--color-accent)] font-bold text-lg shadow-sm"
   >
-    א
+    {monogram}
   </span>
   <span class="flex flex-col leading-tight">
-    <span class="font-bold text-[color:var(--color-ink-900)] text-base">שם העסק</span>
+    <span class="font-bold text-[color:var(--color-ink-900)] text-base">{site.name}</span>
     <span class="text-[11px] text-[color:var(--color-ink-400)]">מערכות אבטחה והתקנות</span>
   </span>
 </a>
