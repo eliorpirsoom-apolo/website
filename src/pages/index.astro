@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { nav } from "../data/nav.ts";
+import { site } from "../data/site.ts";
+
+const categories = nav.filter((n) => n.children);
+---
+<BaseLayout title={site.name} description={`${site.tagline}. התקנה, שירות ותחזוקה לבית ולעסק.`}>
+  <section class="relative overflow-hidden">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 -z-10"
+      style="background:
+        radial-gradient(55% 55% at 100% 0%, color-mix(in oklab, var(--color-brand-200) 60%, transparent) 0%, transparent 60%),
+        radial-gradient(45% 45% at 0% 100%, color-mix(in oklab, var(--color-accent) 22%, transparent) 0%, transparent 60%);"
+    ></div>
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 pb-10 pt-12 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-16 lg:pt-20">
+      <div class="lg:col-span-7">
+        <div class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-ink-200)] bg-white/70 px-3 py-1 text-[12px] font-medium text-[color:var(--color-ink-600)]">
+          <span class="h-1.5 w-1.5 rounded-full bg-[color:var(--color-brand-500)]"></span>
+          שירות מקצועי · ארצי · מהיר
+        </div>
+        <h1 class="mt-4 text-balance text-4xl font-extrabold leading-[1.1] tracking-tight text-[color:var(--color-ink-900)] sm:text-5xl lg:text-6xl">
+          מערכות אבטחה <br />
+          <span class="text-[color:var(--color-brand-600)]">שמגנות באמת</span> על מה שחשוב לכם.
+        </h1>
+        <p class="mt-5 max-w-xl text-base leading-relaxed text-[color:var(--color-ink-600)] lg:text-[17px]">
+          מצלמות, אינטרקום, אזעקות ובקרת כניסה — התקנה, שדרוג ותיקון לבית פרטי ולעסקים. צוות הטכנאים שלנו מגיע מצויד, מתקין נכון מהפעם הראשונה ומלווה אתכם בשירות.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-6 py-3 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
+            לקבלת הצעת מחיר
+          </a>
+          <a href={`tel:${site.phoneIntl}`} class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-6 py-3 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+            חייגו · {site.phone}
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 lg:pr-6">
+        <div class="grid gap-4">
+          {categories.map((c, i) => (
+            <a
+              href={c.href}
+              class:list={[
+                "group rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-brand-200)] hover:shadow-md",
+                i === 1 ? "lg:translate-x-6" : "",
+                i === 2 ? "lg:translate-x-12" : "",
+              ]}
+            >
+              <div class="flex items-center justify-between">
+                <span class="text-[12px] font-mono text-[color:var(--color-ink-400)]">0{i + 1}</span>
+                <span aria-hidden="true" class="text-[color:var(--color-brand-500)] transition-transform group-hover:-translate-x-1">←</span>
+              </div>
+              <div class="mt-2 text-lg font-bold text-[color:var(--color-ink-900)] group-hover:text-[color:var(--color-brand-700)]">{c.title}</div>
+              <div class="mt-1 text-[13px] text-[color:var(--color-ink-500)]">
+                {c.children!.length} שירותים בקטגוריה
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+      <div>
+        <h2 class="text-2xl font-bold text-[color:var(--color-ink-900)] lg:text-3xl">למה אנחנו</h2>
+        <p class="mt-3 text-[15px] text-[color:var(--color-ink-600)]">
+          מה שמבדיל אותנו: אחריות מלאה, ציוד מהיצרן ושירות אחרי המכירה.
+        </p>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {[
+          { t: "ניסיון מוכח", d: "שנות עבודה בשטח עם בתים פרטיים, עסקים וחברות." },
+          { t: "התקנה מקצועית", d: "תכנון מקדים, התקנה נקייה וכיול מלא לפני שאנחנו יוצאים." },
+          { t: "אחריות ושירות", d: "אחריות על העבודה ועל הציוד, וזמינות לקריאות שירות." },
+          { t: "ציוד איכותי", d: "עובדים רק עם מותגים מובילים — בלי קיצורי דרך." },
+        ].map(({ t, d }) => (
+          <li class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-5">
+            <div class="text-[15px] font-bold text-[color:var(--color-ink-900)]">{t}</div>
+            <p class="mt-1.5 text-[14px] text-[color:var(--color-ink-600)]">{d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-7xl px-4 pb-14 lg:px-8">
+    <CtaBlock />
+  </div>
+</BaseLayout>

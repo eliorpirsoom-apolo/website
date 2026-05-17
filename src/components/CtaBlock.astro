@@ -1,0 +1,28 @@
+---
+import { site } from "../data/site.ts";
+interface Props { title?: string; subtitle?: string }
+const {
+  title = "מעוניינים בהצעת מחיר?",
+  subtitle = "השאירו פרטים ונחזור אליכם תוך זמן קצר, או חייגו ישירות.",
+} = Astro.props;
+const waText = encodeURIComponent("שלום, אשמח לקבל הצעת מחיר");
+---
+<section class="mt-16 rounded-[var(--radius-card)] bg-[color:var(--color-ink-900)] p-8 text-white lg:p-12">
+  <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+    <div>
+      <h2 class="text-2xl font-bold lg:text-3xl">{title}</h2>
+      <p class="mt-2 max-w-2xl text-[color:var(--color-ink-200)]">{subtitle}</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-accent)] px-6 py-3 text-sm font-semibold text-[color:var(--color-ink-900)] hover:brightness-95">
+        לטופס יצירת קשר
+      </a>
+      <a href={`tel:${site.phoneIntl}`} class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+        חייגו · {site.phone}
+      </a>
+      <a href={`https://wa.me/${site.whatsapp}?text=${waText}`} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white hover:brightness-95">
+        ווטסאפ
+      </a>
+    </div>
+  </div>
+</section>

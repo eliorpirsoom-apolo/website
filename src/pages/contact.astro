@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site.ts";
+
+const waText = encodeURIComponent("שלום, אשמח לקבל הצעת מחיר");
+---
+<BaseLayout title="צור קשר" description="השאירו פרטים לקבלת הצעת מחיר, או צרו קשר ישיר בטלפון ובווטסאפ.">
+  <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
+    <Breadcrumbs items={[{ title: "צור קשר" }]} />
+  </div>
+  <PageHero
+    eyebrow="נשמח לחזור אליכם"
+    title="צור קשר"
+    intro="השאירו פרטים בטופס ונחזור אליכם תוך זמן קצר, או בחרו לפנות אלינו ישירות בטלפון ובווטסאפ."
+  />
+  <section class="mx-auto grid max-w-7xl gap-8 px-4 pb-16 lg:grid-cols-[2fr_1fr] lg:px-8">
+    <form
+      method="POST"
+      action="https://formspree.io/f/REPLACE_ME"
+      class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-6 lg:p-8"
+      novalidate
+    >
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">שם מלא</span>
+          <input
+            type="text"
+            name="name"
+            required
+            autocomplete="name"
+            class="w-full rounded-lg border border-[color:var(--color-ink-200)] bg-white px-3 py-2.5 text-[15px] focus:border-[color:var(--color-brand-500)] focus:ring-2 focus:ring-[color:var(--color-brand-200)] focus:outline-none"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">טלפון</span>
+          <input
+            type="tel"
+            name="phone"
+            required
+            inputmode="tel"
+            autocomplete="tel"
+            class="w-full rounded-lg border border-[color:var(--color-ink-200)] bg-white px-3 py-2.5 text-[15px] focus:border-[color:var(--color-brand-500)] focus:ring-2 focus:ring-[color:var(--color-brand-200)] focus:outline-none"
+          />
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">אימייל (לא חובה)</span>
+          <input
+            type="email"
+            name="email"
+            autocomplete="email"
+            class="w-full rounded-lg border border-[color:var(--color-ink-200)] bg-white px-3 py-2.5 text-[15px] focus:border-[color:var(--color-brand-500)] focus:ring-2 focus:ring-[color:var(--color-brand-200)] focus:outline-none"
+          />
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">סוג השירות</span>
+          <select
+            name="service"
+            class="w-full rounded-lg border border-[color:var(--color-ink-200)] bg-white px-3 py-2.5 text-[15px] focus:border-[color:var(--color-brand-500)] focus:ring-2 focus:ring-[color:var(--color-brand-200)] focus:outline-none"
+          >
+            <option value="">בחרו שירות</option>
+            <option>מצלמות אבטחה</option>
+            <option>אינטרקום</option>
+            <option>מערכת אזעקה</option>
+            <option>מערכת אבטחה משולבת</option>
+            <option>תיקון / שירות</option>
+            <option>אחר</option>
+          </select>
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">פרטים נוספים</span>
+          <textarea
+            name="message"
+            rows="4"
+            class="w-full rounded-lg border border-[color:var(--color-ink-200)] bg-white px-3 py-2.5 text-[15px] focus:border-[color:var(--color-brand-500)] focus:ring-2 focus:ring-[color:var(--color-brand-200)] focus:outline-none"
+          ></textarea>
+        </label>
+      </div>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+      <button
+        type="submit"
+        class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-6 py-3 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)] sm:w-auto"
+      >
+        שליחה
+      </button>
+      <p class="mt-3 text-xs text-[color:var(--color-ink-400)]">
+        הפרטים נשלחים מאובטח ולא נמסרים לצדדים שלישיים.
+      </p>
+    </form>
+
+    <aside class="space-y-4">
+      <div class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-6">
+        <div class="text-sm font-bold text-[color:var(--color-ink-900)]">דרכי התקשרות</div>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a href={`tel:${site.phoneIntl}`} class="text-[color:var(--color-ink-800)] hover:text-[color:var(--color-brand-600)]">טלפון · {site.phone}</a></li>
+          <li><a href={`https://wa.me/${site.whatsapp}?text=${waText}`} target="_blank" rel="noopener noreferrer" class="text-[color:var(--color-ink-800)] hover:text-[color:var(--color-brand-600)]">ווטסאפ</a></li>
+          <li><a href={`mailto:${site.email}`} class="text-[color:var(--color-ink-800)] hover:text-[color:var(--color-brand-600)]">{site.email}</a></li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-[color:var(--color-ink-100)] bg-[color:var(--color-ink-900)] p-6 text-white">
+        <div class="text-sm font-bold">שעות פעילות</div>
+        <p class="mt-2 text-sm text-[color:var(--color-ink-200)]">
+          ימים א'–ה': 08:00–19:00<br />
+          יום ו': 08:00–13:00
+        </p>
+      </div>
+    </aside>
+  </section>
+</BaseLayout>

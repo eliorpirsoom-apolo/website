@@ -1,0 +1,65 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import { nav } from "../data/nav.ts";
+
+interface Props {
+  href: string;
+  description?: string;
+  intro?: string;
+}
+const { href, description, intro } = Astro.props;
+const category = nav.find((n) => n.href === href);
+const title = category?.title ?? "";
+const children = category?.children ?? [];
+---
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
+    <Breadcrumbs items={[{ title }]} />
+  </div>
+  <PageHero eyebrow="קטגוריית שירות" title={title} intro={intro}>
+    <div slot="actions" class="mt-7 flex flex-wrap gap-3">
+      <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
+        קבלו הצעת מחיר
+      </a>
+      <a href="#services" class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+        כל השירותים בקטגוריה
+      </a>
+    </div>
+  </PageHero>
+
+  <section id="services" class="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+    <h2 class="text-xl font-bold text-[color:var(--color-ink-900)]">השירותים שלנו בקטגוריה</h2>
+    <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {children.map((child, i) => (
+        <li>
+          <a
+            href={child.href}
+            class="group flex h-full flex-col justify-between rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-[color:var(--color-brand-200)] hover:shadow-md"
+          >
+            <div>
+              <div class="text-[12px] font-mono text-[color:var(--color-ink-400)]">{String(i + 1).padStart(2, "0")}</div>
+              <h3 class="mt-2 text-[16px] font-bold text-[color:var(--color-ink-900)] group-hover:text-[color:var(--color-brand-700)]">
+                {child.title}
+              </h3>
+            </div>
+            <div class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[color:var(--color-brand-600)]">
+              <span>פרטים נוספים</span>
+              <span aria-hidden="true" class="transition-transform group-hover:-translate-x-1">←</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-4 pb-8">
+    <slot />
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <CtaBlock />
+  </div>
+</BaseLayout>

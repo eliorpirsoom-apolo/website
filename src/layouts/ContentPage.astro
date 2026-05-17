@@ -1,0 +1,45 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+
+interface Crumb { title: string; href?: string }
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  intro?: string;
+  crumbs: Crumb[];
+}
+const { title, description, eyebrow, intro, crumbs } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
+    <Breadcrumbs items={crumbs} />
+  </div>
+  <PageHero eyebrow={eyebrow} title={title} intro={intro}>
+    <div slot="actions" class="mt-7 flex flex-wrap gap-3">
+      <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
+        לקבלת הצעת מחיר
+      </a>
+      <a href="#tochen" class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+        קראו עוד על השירות
+      </a>
+    </div>
+  </PageHero>
+
+  <article id="tochen" class="mx-auto max-w-3xl px-4 py-10 lg:px-0">
+    <div class="prose-like space-y-5 text-[15.5px] leading-relaxed text-[color:var(--color-ink-700)]">
+      <slot />
+    </div>
+
+    <div class="mt-12 rounded-2xl border border-dashed border-[color:var(--color-ink-200)] bg-white/60 p-6 text-sm text-[color:var(--color-ink-400)]">
+      תוכן הדף יוזן בהמשך באמצעות מערכת התוכן (CMS).
+    </div>
+  </article>
+
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <CtaBlock />
+  </div>
+</BaseLayout>
