@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+---
+<BaseLayout title="מידע מקצועי" description="מאמרים, מדריכים וטיפים מקצועיים על מצלמות אבטחה, אינטרקום ואזעקות.">
+  <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
+    <Breadcrumbs items={[{ title: "מידע מקצועי" }]} />
+  </div>
+  <PageHero
+    eyebrow="ידע מהשטח"
+    title="מידע מקצועי"
+    intro="מדריכים, מאמרים וטיפים מהשטח — איך לבחור מערכת נכונה, מה חשוב לבדוק לפני התקנה, ואיך לתחזק את המערכת שלכם לאורך זמן."
+  />
+  <section class="mx-auto max-w-3xl px-4 pb-12">
+    <div class="rounded-2xl border border-dashed border-[color:var(--color-ink-200)] bg-white/60 p-8 text-center text-sm text-[color:var(--color-ink-500)]">
+      מאמרים יתווספו בקרוב.
+    </div>
+  </section>
+  <div class="mx-auto max-w-7xl px-4 lg:px-8">
+    <CtaBlock />
+  </div>
+</BaseLayout>

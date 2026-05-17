@@ -1,0 +1,38 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+}
+const { eyebrow, title, intro } = Astro.props;
+---
+<section class="relative overflow-hidden">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10"
+    style="background:
+      radial-gradient(60% 60% at 100% 0%, color-mix(in oklab, var(--color-brand-100) 70%, transparent) 0%, transparent 60%),
+      radial-gradient(40% 40% at 0% 100%, color-mix(in oklab, var(--color-accent) 18%, transparent) 0%, transparent 60%);"
+  ></div>
+  <div class="mx-auto grid max-w-7xl gap-6 px-4 pb-12 pt-10 lg:grid-cols-[1.2fr_1fr] lg:gap-12 lg:px-8 lg:pb-16 lg:pt-16">
+    <div>
+      {eyebrow && (
+        <div class="mb-3 inline-flex items-center rounded-full border border-[color:var(--color-ink-200)] bg-white/60 px-3 py-1 text-[12px] font-medium text-[color:var(--color-ink-600)]">
+          {eyebrow}
+        </div>
+      )}
+      <h1 class="text-balance text-3xl font-extrabold leading-[1.15] tracking-tight text-[color:var(--color-ink-900)] sm:text-4xl lg:text-5xl">
+        {title}
+      </h1>
+      {intro && (
+        <p class="mt-5 max-w-2xl text-[15.5px] leading-relaxed text-[color:var(--color-ink-600)] lg:text-base">
+          {intro}
+        </p>
+      )}
+      <slot name="actions" />
+    </div>
+    <div class="hidden lg:block">
+      <slot name="aside" />
+    </div>
+  </div>
+</section>

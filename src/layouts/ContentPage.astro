@@ -1,0 +1,46 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBlock from "../components/CtaBlock.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+
+interface Crumb { title: string; href?: string }
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  intro?: string;
+  crumbs: Crumb[];
+}
+const { title, description, eyebrow, intro, crumbs } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
+    <Breadcrumbs items={crumbs} />
+  </div>
+
+  <PageHero eyebrow={eyebrow} title={title} intro={intro}>
+    <div slot="actions" class="mt-7 flex flex-wrap gap-3">
+      <a href="/contact/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
+        לקבלת הצעת מחיר
+      </a>
+      <a href="#tochen" class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+        קראו עוד
+      </a>
+    </div>
+  </PageHero>
+
+  <section id="tochen" class="mx-auto max-w-7xl px-4 pb-4 pt-6 lg:px-8 lg:pt-10">
+    <div class="grid gap-8 lg:grid-cols-[1fr_3fr] lg:gap-12">
+      <TableOfContents />
+      <article data-toc-source class="prose-he max-w-none text-[16px] leading-[1.85] text-[color:var(--color-ink-700)]">
+        <slot />
+      </article>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-7xl px-4 pb-4 lg:px-8">
+    <CtaBlock />
+  </div>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site.ts";
+---
+<BaseLayout title="הדף לא נמצא" description="הדף שחיפשתם לא קיים — הנה כמה דרכים להמשיך." noIndex={true}>
+  <section class="mx-auto max-w-3xl px-4 py-24 text-center lg:px-8">
+    <div class="text-[120px] font-extrabold leading-none text-[color:var(--color-ink-200)] sm:text-[180px]">404</div>
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[color:var(--color-ink-900)] sm:text-4xl">
+      הדף לא נמצא
+    </h1>
+    <p class="mt-3 text-[color:var(--color-ink-500)]">
+      ייתכן שהקישור שגוי, או שהדף הועבר. אפשר לחזור לעמוד הבית או ליצור איתנו קשר ישירות.
+    </p>
+    <div class="mt-7 flex flex-wrap justify-center gap-3">
+      <a href="/" class="inline-flex items-center justify-center rounded-full bg-[color:var(--color-ink-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-brand-600)]">
+        חזרה לעמוד הבית
+      </a>
+      <a href="/contact/" class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+        צרו קשר
+      </a>
+      <a href={`tel:${site.phoneIntl}`} class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-ink-200)] bg-white px-5 py-2.5 text-sm font-semibold text-[color:var(--color-ink-800)] hover:bg-[color:var(--color-ink-50)]">
+        חייגו · {site.phone}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

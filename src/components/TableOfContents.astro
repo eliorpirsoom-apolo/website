@@ -1,0 +1,111 @@
+---
+interface Props { title?: string }
+const { title = "תוכן עניינים" } = Astro.props;
+---
+<aside
+  data-toc
+  class="hidden lg:block lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"
+>
+  <div class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-5">
+    <div class="mb-3 text-[12px] font-mono uppercase tracking-wider text-[color:var(--color-ink-400)]">
+      {title}
+    </div>
+    <ol data-toc-list class="flex flex-col gap-1 text-[13.5px]"></ol>
+  </div>
+</aside>
+
+<details data-toc-mobile class="lg:hidden mb-6 rounded-xl border border-[color:var(--color-ink-100)] bg-white">
+  <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[color:var(--color-ink-800)]">
+    <span>{title}</span>
+    <svg aria-hidden="true" class="h-4 w-4 transition-transform" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M2 4l4 4 4-4"/>
+    </svg>
+  </summary>
+  <ol data-toc-list-mobile class="flex flex-col gap-1 border-t border-[color:var(--color-ink-100)] px-4 py-3 text-[13.5px]"></ol>
+</details>
+
+<script>
+  function slugify(text: string): string {
+    return text
+      .trim()
+      .toLowerCase()
+      .replace(/["'״׳`.,:;!?()[\]{}<>\/\\]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-{2,}/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  function buildToc() {
+    const article = document.querySelector<HTMLElement>("[data-toc-source]");
+    const lists = document.querySelectorAll<HTMLOListElement>("[data-toc-list], [data-toc-list-mobile]");
+    const desktopWrapper = document.querySelector<HTMLElement>("[data-toc]");
+    const mobileWrapper = document.querySelector<HTMLElement>("[data-toc-mobile]");
+    if (!article || lists.length === 0) return;
+
+    const headings = Array.from(article.querySelectorAll<HTMLHeadingElement>("h2"));
+    if (headings.length < 2) {
+      desktopWrapper?.classList.add("hidden");
+      mobileWrapper?.classList.add("hidden");
+      return;
+    }
+
+    const used = new Set<string>();
+    const entries = headings.map((h, i) => {
+      const base = h.id || slugify(h.textContent || "") || `section-${i + 1}`;
+      let unique = base;
+      let n = 2;
+      while (used.has(unique)) unique = `${base}-${n++}`;
+      used.add(unique);
+      h.id = unique;
+      return { id: unique, text: h.textContent?.trim() || "" };
+    });
+
+    lists.forEach((list) => {
+      list.innerHTML = "";
+      entries.forEach((entry) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `#${entry.id}`;
+        a.textContent = entry.text;
+        a.dataset.tocLink = entry.id;
+        a.className =
+          "block rounded-md px-2 py-1.5 text-[color:var(--color-ink-600)] hover:bg-[color:var(--color-brand-50)] hover:text-[color:var(--color-brand-700)] transition-colors";
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    });
+
+    if ("IntersectionObserver" in window) {
+      const links = document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]");
+      const linkById = new Map<string, HTMLAnchorElement[]>();
+      links.forEach((l) => {
+        const id = l.dataset.tocLink!;
+        if (!linkById.has(id)) linkById.set(id, []);
+        linkById.get(id)!.push(l);
+      });
+
+      const ACTIVE = ["bg-[color:var(--color-brand-50)]", "text-[color:var(--color-brand-700)]", "font-semibold"];
+      const setActive = (id: string) => {
+        links.forEach((l) => l.classList.remove(...ACTIVE));
+        linkById.get(id)?.forEach((l) => l.classList.add(...ACTIVE));
+      };
+
+      const observer = new IntersectionObserver(
+        (events) => {
+          const visible = events
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+          if (visible) setActive(visible.target.id);
+        },
+        { rootMargin: "-80px 0px -70% 0px", threshold: 0 },
+      );
+      headings.forEach((h) => observer.observe(h));
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", buildToc);
+  } else {
+    buildToc();
+  }
+</script>
