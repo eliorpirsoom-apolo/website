@@ -65,6 +65,67 @@ html, body {
   }
 }
 
+/* Hebrew prose styles for content pages */
+.prose-he > * + * { margin-top: 1.1em; }
+.prose-he h2 {
+  margin-top: 2.5em;
+  margin-bottom: 0.6em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-ink-900);
+  scroll-margin-top: 5.5rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.prose-he h2:first-child { margin-top: 0; }
+.prose-he h3 {
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--color-ink-900);
+  scroll-margin-top: 5.5rem;
+}
+.prose-he p { line-height: 1.85; }
+.prose-he ul, .prose-he ol {
+  padding-inline-start: 1.4em;
+  margin: 0.8em 0;
+}
+.prose-he ul { list-style: disc; }
+.prose-he ol { list-style: decimal; }
+.prose-he li { margin: 0.35em 0; }
+.prose-he li::marker { color: var(--color-brand-500); }
+.prose-he a {
+  color: var(--color-brand-600);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose-he a:hover { color: var(--color-brand-700); }
+.prose-he strong { color: var(--color-ink-900); font-weight: 700; }
+.prose-he blockquote {
+  border-inline-start: 3px solid var(--color-brand-500);
+  padding-inline-start: 1em;
+  color: var(--color-ink-600);
+  font-style: italic;
+  margin: 1.2em 0;
+}
+.prose-he hr {
+  border: 0;
+  border-top: 1px solid var(--color-ink-100);
+  margin: 2.2em 0;
+}
+.prose-he code {
+  background: var(--color-ink-100);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.prose-he img {
+  border-radius: 12px;
+  margin: 1.4em 0;
+}
+
 /* dropdown reveal */
 .nav-group:hover > .nav-panel,
 .nav-group:focus-within > .nav-panel {

@@ -1,0 +1,25 @@
+---
+interface Props { title?: string }
+const { title = "תוכן עניינים" } = Astro.props;
+---
+<aside
+  data-toc
+  class="hidden lg:block lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto"
+>
+  <div class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-5">
+    <div class="mb-3 text-[12px] font-mono uppercase tracking-wider text-[color:var(--color-ink-400)]">
+      {title}
+    </div>
+    <ol data-toc-list class="flex flex-col gap-1 text-[13.5px]"></ol>
+  </div>
+</aside>
+
+<details data-toc-mobile class="lg:hidden mb-6 rounded-xl border border-[color:var(--color-ink-100)] bg-white">
+  <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[color:var(--color-ink-800)]">
+    <span>{title}</span>
+    <svg aria-hidden="true" class="h-4 w-4 transition-transform" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M2 4l4 4 4-4"/>
+    </svg>
+  </summary>
+  <ol data-toc-list-mobile class="flex flex-col gap-1 border-t border-[color:var(--color-ink-100)] px-4 py-3 text-[13.5px]"></ol>
+</details>
