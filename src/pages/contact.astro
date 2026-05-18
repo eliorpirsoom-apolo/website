@@ -5,6 +5,13 @@ import PageHero from "../components/PageHero.astro";
 import { site } from "../data/site.ts";
 
 const waText = encodeURIComponent("שלום, אשמח לקבל הצעת מחיר");
+const error = Astro.url.searchParams.get("error");
+const errorMessages: Record<string, string> = {
+  missing: "נא למלא שם וטלפון.",
+  upstream: "אירעה שגיאה בקליטת הפנייה. אנא נסו שוב או חייגו ישירות.",
+  network: "תקלת רשת זמנית. אנא נסו שוב או חייגו ישירות.",
+};
+const errorText = error ? errorMessages[error] : null;
 ---
 <BaseLayout title="צור קשר" description="השאירו פרטים לקבלת הצעת מחיר, או צרו קשר ישיר בטלפון ובווטסאפ.">
   <div class="mx-auto max-w-7xl px-4 pt-6 lg:px-8">
@@ -18,10 +25,15 @@ const waText = encodeURIComponent("שלום, אשמח לקבל הצעת מחיר
   <section class="mx-auto grid max-w-7xl gap-8 px-4 pb-16 lg:grid-cols-[2fr_1fr] lg:px-8">
     <form
       method="POST"
-      action="https://formspree.io/f/REPLACE_ME"
+      action="/api/lead"
       class="rounded-2xl border border-[color:var(--color-ink-100)] bg-white p-6 lg:p-8"
       novalidate
     >
+      {errorText && (
+        <div role="alert" class="mb-5 rounded-lg border border-[color:#fecaca] bg-[#fef2f2] px-4 py-3 text-sm text-[#991b1b]">
+          {errorText}
+        </div>
+      )}
       <div class="grid gap-4 sm:grid-cols-2">
         <label class="block">
           <span class="mb-1.5 block text-sm font-medium text-[color:var(--color-ink-800)]">שם מלא</span>
