@@ -64,6 +64,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   return Response.redirect(new URL("/thanks/", request.url).toString(), 303);
 };
 
-export const onRequest: PagesFunction = async () => {
-  return new Response("Method not allowed", { status: 405 });
+export const onRequest: PagesFunction = async ({ request }) => {
+  return Response.redirect(new URL("/contact/", request.url).toString(), 303);
 };
