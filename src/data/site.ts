@@ -6,6 +6,7 @@ export const site = {
   phoneIntl: "+97233818888",
   whatsapp: "972542166156",
   email: "eliorpirsoom@gmail.com",
-  address: "ישראל",
+  address: "ארזים 72, נתיבות",
+  addressQuery: "ארזים+72,+נתיבות",
   url: "https://example.com",
 };

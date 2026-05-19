@@ -4,6 +4,8 @@ import { nav } from "../data/nav.ts";
 
 const year = new Date().getFullYear();
 const categories = nav.filter((n) => n.children);
+const mapEmbedUrl = `https://www.google.com/maps?q=${site.addressQuery}&hl=he&output=embed`;
+const mapDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.addressQuery}`;
 ---
 <footer class="mt-24 border-t border-[color:var(--color-ink-100)] bg-[color:var(--color-ink-900)] text-[color:var(--color-ink-100)]">
   <div class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
@@ -29,6 +31,48 @@ const categories = nav.filter((n) => n.children);
         </div>
       ))}
     </div>
+
+    <div class="mt-12 grid gap-6 border-t border-[color:var(--color-ink-700)] pt-10 lg:grid-cols-[2fr_3fr] lg:gap-10">
+      <div>
+        <div class="text-[12px] font-mono uppercase tracking-wider text-[color:var(--color-ink-400)]">מצא אותנו</div>
+        <div class="mt-2 text-xl font-bold text-white">{site.address}</div>
+        <p class="mt-3 text-sm text-[color:var(--color-ink-300)]">
+          ניתן להגיע ישירות לעסק, או לחייג מראש לתאום פגישה.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a
+            href={mapDirectionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-accent)] px-4 py-2 text-sm font-semibold text-[color:var(--color-ink-900)] hover:brightness-95"
+          >
+            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.7a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+            </svg>
+            <span>הוראות הגעה</span>
+          </a>
+          <a
+            href={`tel:${site.phoneIntl}`}
+            class="inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
+          >
+            חייגו · {site.phone}
+          </a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-2xl border border-[color:var(--color-ink-700)] bg-[color:var(--color-ink-800)]">
+        <iframe
+          src={mapEmbedUrl}
+          title={`מפה: ${site.address}`}
+          width="100%"
+          height="280"
+          style="border:0; display:block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
     <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-[color:var(--color-ink-700)] pt-6 text-xs text-[color:var(--color-ink-400)] lg:flex-row lg:items-center">
       <div>© {year} {site.name}. כל הזכויות שמורות.</div>
       <ul class="flex gap-4">
