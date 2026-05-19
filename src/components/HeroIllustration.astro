@@ -25,6 +25,14 @@ const { class: className = "" } = Astro.props;
         <stop offset="0%" stop-color="#5286ff" stop-opacity="0.22"/>
         <stop offset="100%" stop-color="#5286ff" stop-opacity="0"/>
       </radialGradient>
+      <radialGradient id="hero-beam-grad" cx="300" cy="320" r="240" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#5286ff" stop-opacity="0.55"/>
+        <stop offset="60%" stop-color="#5286ff" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#5286ff" stop-opacity="0"/>
+      </radialGradient>
+      <clipPath id="hero-lens-clip">
+        <circle cx="300" cy="328" r="42"/>
+      </clipPath>
     </defs>
 
     <rect width="600" height="720" rx="32" fill="#ffffff" stroke="#dfeaff" stroke-width="1"/>
@@ -43,10 +51,36 @@ const { class: className = "" } = Astro.props;
     </g>
 
     <g stroke="#2a5cff" fill="none" stroke-linecap="round">
-      <circle cx="300" cy="320" r="100" opacity="0.55" stroke-width="1.5"/>
-      <circle cx="300" cy="320" r="170" opacity="0.32" stroke-width="1.5"/>
-      <circle cx="300" cy="320" r="240" opacity="0.18" stroke-width="1.5"/>
-      <circle cx="300" cy="320" r="310" opacity="0.09" stroke-width="1.5"/>
+      <circle cx="300" cy="320" r="100" opacity="0.30" stroke-width="1.5"/>
+      <circle cx="300" cy="320" r="170" opacity="0.18" stroke-width="1.5"/>
+      <circle cx="300" cy="320" r="240" opacity="0.10" stroke-width="1.5"/>
+      <circle cx="300" cy="320" r="310" opacity="0.05" stroke-width="1.5"/>
+    </g>
+
+    <g fill="none" stroke="#2a5cff" stroke-width="1.5">
+      <circle cx="300" cy="320" r="60">
+        <animate attributeName="r" values="60;300" dur="3.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0" dur="3.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="320" r="60">
+        <animate attributeName="r" values="60;300" dur="3.4s" begin="1.7s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;0" dur="3.4s" begin="1.7s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0 300 320"
+        to="360 300 320"
+        dur="7s"
+        repeatCount="indefinite"
+      />
+      <path
+        d="M 300 320 L 517 218 A 240 240 0 0 1 517 422 Z"
+        fill="url(#hero-beam-grad)"
+      />
     </g>
 
     <line x1="180" y1="118" x2="420" y2="118" stroke="#0c0e15" stroke-width="3" stroke-linecap="round"/>
@@ -61,6 +95,14 @@ const { class: className = "" } = Astro.props;
     <circle cx="300" cy="328" r="42" fill="url(#hero-lens)"/>
     <circle cx="300" cy="328" r="30" fill="#0c0e15" opacity="0.35"/>
     <circle cx="300" cy="328" r="22" fill="none" stroke="#86afff" stroke-width="1.5" opacity="0.5"/>
+
+    <g clip-path="url(#hero-lens-clip)">
+      <rect x="258" y="286" width="84" height="2" fill="#86afff" opacity="0.6">
+        <animate attributeName="y" values="286;370;286" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.75;0.25;0.75" dur="2.6s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
     <ellipse cx="284" cy="312" rx="11" ry="7" fill="#dfeaff" opacity="0.55"/>
     <circle cx="282" cy="310" r="3" fill="#ffffff"/>
 
@@ -73,15 +115,24 @@ const { class: className = "" } = Astro.props;
     <g>
       <g transform="translate(160 480)">
         <circle r="7" fill="#f7c948"/>
-        <circle r="15" fill="none" stroke="#f7c948" stroke-width="1" opacity="0.5"/>
+        <circle r="9" fill="none" stroke="#f7c948" stroke-width="1.5">
+          <animate attributeName="r" values="9;26" dur="2.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
       </g>
       <g transform="translate(440 458)">
         <circle r="7" fill="#2a5cff"/>
-        <circle r="15" fill="none" stroke="#2a5cff" stroke-width="1" opacity="0.5"/>
+        <circle r="9" fill="none" stroke="#2a5cff" stroke-width="1.5">
+          <animate attributeName="r" values="9;26" dur="2.4s" begin="0.8s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0" dur="2.4s" begin="0.8s" repeatCount="indefinite"/>
+        </circle>
       </g>
       <g transform="translate(300 580)">
         <circle r="7" fill="#2a5cff"/>
-        <circle r="15" fill="none" stroke="#2a5cff" stroke-width="1" opacity="0.5"/>
+        <circle r="9" fill="none" stroke="#2a5cff" stroke-width="1.5">
+          <animate attributeName="r" values="9;26" dur="2.4s" begin="1.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;0" dur="2.4s" begin="1.6s" repeatCount="indefinite"/>
+        </circle>
       </g>
     </g>
 
@@ -94,6 +145,10 @@ const { class: className = "" } = Astro.props;
 
 <style>
   @media (prefers-reduced-motion: reduce) {
-    svg animate { display: none; }
+    svg animate,
+    svg animateTransform,
+    svg animateMotion {
+      display: none;
+    }
   }
 </style>
