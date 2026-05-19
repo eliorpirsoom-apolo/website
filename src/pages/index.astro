@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CtaBlock from "../components/CtaBlock.astro";
 import HeroIllustration from "../components/HeroIllustration.astro";
+import ServicesSlider from "../components/ServicesSlider.astro";
+import AboutPreview from "../components/AboutPreview.astro";
 import { site } from "../data/site.ts";
 ---
 <BaseLayout title={site.name} description={`${site.tagline}. התקנה, שירות ותחזוקה לבית ולעסק.`}>
@@ -41,6 +43,10 @@ import { site } from "../data/site.ts";
       </div>
     </div>
   </section>
+
+  <ServicesSlider />
+
+  <AboutPreview />
 
   <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
